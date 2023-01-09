@@ -1,7 +1,8 @@
 package me.dio.academia.digital.controller;
 
 import me.dio.academia.digital.entity.Aluno;
-import me.dio.academia.digital.entity.form.AlunoForm;
+import me.dio.academia.digital.entity.dto.form.AlunoForm;
+import me.dio.academia.digital.entity.dto.view.AlunoView;
 import me.dio.academia.digital.service.IAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +28,9 @@ public class AlunoController {
     }
 
     @PostMapping
-    public ResponseEntity<Aluno> create(@RequestBody AlunoForm alunoForm){
-        Aluno aluno = alunoService.create(alunoForm);
+    public ResponseEntity<AlunoView> create(@RequestBody AlunoForm alunoForm){
+        AlunoView aluno = alunoService.create(alunoForm);
 
-        return ResponseEntity.created(URI.create("")).body(aluno);
+        return ResponseEntity.created(URI.create("/alunos/" + aluno.getId())).body(aluno);
     }
 }

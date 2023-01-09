@@ -1,4 +1,4 @@
-package me.dio.academia.digital.entity.form;
+package me.dio.academia.digital.entity.dto.form;
 
 public class AvaliacaoFisicaUpdateForm {
 

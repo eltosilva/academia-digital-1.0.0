@@ -1,7 +1,7 @@
 package me.dio.academia.digital.service;
 
 import me.dio.academia.digital.entity.Matricula;
-import me.dio.academia.digital.entity.form.MatriculaForm;
+import me.dio.academia.digital.entity.dto.form.MatriculaForm;
 
 import java.util.List;
 
