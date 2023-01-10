@@ -1,7 +1,7 @@
 package me.dio.academia.digital.controller;
 
-import me.dio.academia.digital.entity.Aluno;
 import me.dio.academia.digital.entity.dto.form.AlunoForm;
+import me.dio.academia.digital.entity.dto.form.AlunoUpdateForm;
 import me.dio.academia.digital.entity.dto.view.AlunoView;
 import me.dio.academia.digital.service.IAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,13 @@ public class AlunoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Aluno>> getAll(){
+    public ResponseEntity<List<AlunoView>> getAll(){
         return ResponseEntity.ok(alunoService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AlunoView> get(@PathVariable Long id){
+        return ResponseEntity.ok(alunoService.get(id));
     }
 
     @PostMapping
@@ -32,5 +37,17 @@ public class AlunoController {
         AlunoView aluno = alunoService.create(alunoForm);
 
         return ResponseEntity.created(URI.create("/alunos/" + aluno.getId())).body(aluno);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<AlunoView> update(@PathVariable Long id, @RequestBody AlunoUpdateForm alunoForm){
+        AlunoView aluno = alunoService.update(id, alunoForm);
+        
+        return ResponseEntity.created(URI.create("/alunos/" + aluno.getId())).body(aluno);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){
+        alunoService.delete(id);
     }
 }

@@ -8,60 +8,67 @@ import me.dio.academia.digital.repository.AlunoRepository;
 import me.dio.academia.digital.service.IAlunoService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AlunoServiceImpl implements IAlunoService {
 
-    AlunoRepository alunoRepository;
+    private AlunoRepository alunoRepository;
+    private ModelMapper modelMapper;
 
     @Autowired
     public AlunoServiceImpl(AlunoRepository alunoRepository){
         this.alunoRepository = alunoRepository;
+        modelMapper = new ModelMapper();
     }
+
     @Override
     public AlunoView create(AlunoForm form) {
-        ModelMapper modelMapper = new ModelMapper();
         Aluno aluno = modelMapper.map(form, Aluno.class);
 
-        aluno = alunoRepository.save(aluno);
-        return modelMapper.map(aluno, AlunoView.class);
+        return modelMapper.map(alunoRepository.save(aluno), AlunoView.class);
     }
 
     @Override
-    public Aluno get(Long id) {
+    public AlunoView get(Long id) {
+        return modelMapper.map(find(id), AlunoView.class);
+    }
+
+    private Aluno find(Long id){
         Optional<Aluno> optionalAluno = alunoRepository.findById(id);
-        if (optionalAluno.isEmpty())
-            throw new EmptyResultDataAccessException(1);
-
-        return optionalAluno.get();
+        
+        return optionalAluno.orElseThrow();
     }
 
     @Override
-    public List<Aluno> getAll() {
-        return alunoRepository.findAll();
+    public List<AlunoView> getAll() {
+        List<Aluno> alunos = alunoRepository.findAll();
+
+        return alunos.stream()
+            .map(aluno -> modelMapper.map(aluno, AlunoView.class))
+            .collect(Collectors.toList());
     }
 
     @Override
-    public Aluno update(Long id, AlunoUpdateForm formUpdate) {
-        Aluno aluno = get(id);
+    public AlunoView update(Long id, AlunoUpdateForm formUpdate) {
+        Aluno aluno = find(id);
 
-        if (!formUpdate.getNome().isEmpty())
+        if (formUpdate.getNome() != null)
             aluno.setNome(formUpdate.getNome());
-        if(!formUpdate.getBairro().isEmpty())
+        if(formUpdate.getBairro() != null)
             aluno.setBairro(formUpdate.getBairro());
         if (formUpdate.getDataDeNascimento() != null)
             aluno.setDataDeNascimento(formUpdate.getDataDeNascimento());
 
-        return alunoRepository.save(aluno);
+        return modelMapper.map(alunoRepository.save(aluno), AlunoView.class);
     }
 
     @Override
     public void delete(Long id) {
-        alunoRepository.delete(get(id));
+        alunoRepository.delete(find(id));
     }
 }

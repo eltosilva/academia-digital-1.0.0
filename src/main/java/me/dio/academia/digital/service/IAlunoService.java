@@ -1,6 +1,5 @@
 package me.dio.academia.digital.service;
 
-import me.dio.academia.digital.entity.Aluno;
 import me.dio.academia.digital.entity.dto.form.AlunoForm;
 import me.dio.academia.digital.entity.dto.form.AlunoUpdateForm;
 import me.dio.academia.digital.entity.dto.view.AlunoView;
@@ -21,13 +20,13 @@ public interface IAlunoService {
    * @param id - id do Aluno que será exibido.
    * @return - Aluno de acordo com o Id fornecido.
    */
-  Aluno get(Long id);
+  AlunoView get(Long id);
 
   /**
    * Retorna todos os Alunos que estão no banco de dados.
    * @return - Uma lista os Alunos que estão salvas no DB.
    */
-  List<Aluno> getAll();
+  List<AlunoView> getAll();
 
   /**
    * Atualiza o Aluno.
@@ -36,7 +35,7 @@ public interface IAlunoService {
    * no banco de dados.
    * @return - Aluno recém-atualizado.
    */
-  Aluno update(Long id, AlunoUpdateForm formUpdate);
+  AlunoView update(Long id, AlunoUpdateForm formUpdate);
 
   /**
    * Deleta um Aluno específico.
