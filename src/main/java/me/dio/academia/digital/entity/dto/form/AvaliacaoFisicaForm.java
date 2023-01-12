@@ -1,15 +1,17 @@
 package me.dio.academia.digital.entity.dto.form;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class AvaliacaoFisicaForm {
 
   private Long alunoId;
 
-  private double peso;
+  private Double peso;
 
-  private double altura;
+  private Double altura;
 }

@@ -69,6 +69,6 @@ public class AlunoServiceImpl implements IAlunoService {
 
     @Override
     public void delete(Long id) {
-        alunoRepository.delete(find(id));
+        alunoRepository.deleteById(id);
     }
 }
