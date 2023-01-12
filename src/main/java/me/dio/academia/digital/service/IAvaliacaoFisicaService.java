@@ -1,6 +1,5 @@
 package me.dio.academia.digital.service;
 
-import me.dio.academia.digital.entity.AvaliacaoFisica;
 import me.dio.academia.digital.entity.dto.form.AvaliacaoFisicaForm;
 import me.dio.academia.digital.entity.dto.form.AvaliacaoFisicaUpdateForm;
 import me.dio.academia.digital.entity.dto.view.AvaliacaoFisicaView;
