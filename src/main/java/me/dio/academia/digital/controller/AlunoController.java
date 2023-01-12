@@ -29,7 +29,7 @@ public class AlunoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AlunoView> get(@PathVariable Long id){
-        return ResponseEntity.ok(alunoService.get(id));
+        return ResponseEntity.of(alunoService.get(id));
     }
 
     @PostMapping

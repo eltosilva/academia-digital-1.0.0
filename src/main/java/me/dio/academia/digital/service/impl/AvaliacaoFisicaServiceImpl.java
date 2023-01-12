@@ -46,13 +46,10 @@ public class AvaliacaoFisicaServiceImpl implements IAvaliacaoFisicaService {
     }
 
     @Override
-    public AvaliacaoFisicaView get(Long id) {
-        return modelMapper.map(findById(id), AvaliacaoFisicaView.class);
-    }
-
-    private AvaliacaoFisica findById(Long id){
+    public Optional<AvaliacaoFisicaView> get(Long id) {
+        
         Optional<AvaliacaoFisica> optional = avaliacaoFisicaRepository.findById(id);
-        return optional.orElseThrow();
+        return optional.map(avaliacao -> modelMapper.map(avaliacao, AvaliacaoFisicaView.class));
     }
 
     @Override
@@ -66,7 +63,7 @@ public class AvaliacaoFisicaServiceImpl implements IAvaliacaoFisicaService {
 
     @Override
     public AvaliacaoFisicaView update(Long id, AvaliacaoFisicaUpdateForm formUpdate) {
-        AvaliacaoFisica avaliacao = findById(id);
+        AvaliacaoFisica avaliacao = avaliacaoFisicaRepository.getById(id);
 
         if(formUpdate.getAltura() != null)
             avaliacao.setAltura(formUpdate.getAltura());

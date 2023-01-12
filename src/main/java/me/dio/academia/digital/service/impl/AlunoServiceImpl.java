@@ -34,15 +34,13 @@ public class AlunoServiceImpl implements IAlunoService {
     }
 
     @Override
-    public AlunoView get(Long id) {
-        return modelMapper.map(find(id), AlunoView.class);
-    }
-
-    private Aluno find(Long id){
+    public Optional<AlunoView> get(Long id) {
+        
         Optional<Aluno> optionalAluno = alunoRepository.findById(id);
         
-        return optionalAluno.orElseThrow();
+        return optionalAluno.map(aluno -> modelMapper.map(aluno, AlunoView.class));
     }
+
 
     @Override
     public List<AlunoView> getAll() {
@@ -55,7 +53,7 @@ public class AlunoServiceImpl implements IAlunoService {
 
     @Override
     public AlunoView update(Long id, AlunoUpdateForm formUpdate) {
-        Aluno aluno = find(id);
+        Aluno aluno = alunoRepository.getById(id);
 
         if (formUpdate.getNome() != null)
             aluno.setNome(formUpdate.getNome());

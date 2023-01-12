@@ -34,7 +34,7 @@ public class AvaliacaoFisicaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AvaliacaoFisicaView> get(@PathVariable Long id){
-        return ResponseEntity.ok(avaliacaoFisicaService.get(id));
+        return ResponseEntity.of(avaliacaoFisicaService.get(id));
     }
 
     @GetMapping
